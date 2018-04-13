@@ -1,4 +1,38 @@
 create database FACE;
 use FACE;
 
-create table 
+create table SE_1 (
+	`mis` varchar(10) not null,
+	`1`  int default 0,
+	`2`  int default 0,
+	`3`  int default 0,
+	`4`  int default 0,
+	`5`  int default 0,
+	`6`  int default 0,
+	`7`  int default 0,
+	`8`  int default 0,
+	`9`  int default 0,
+	`10`  int default 0,
+	`11`  int default 0,
+	`12`  int default 0,
+	`13`  int default 0,
+	`14`  int default 0,
+	`15`  int default 0,
+	`16`  int default 0,
+	`17`  int default 0,
+	`18`  int default 0,
+	`19`  int default 0,
+	`20`  int default 0,
+	`21`  int default 0,
+	`22`  int default 0,
+	`23`  int default 0,
+	`24`  int default 0,
+	`25`  int default 0,
+	`26`  int default 0,
+	`27`  int default 0,
+	`28`  int default 0,
+	`29`  int default 0,
+	`30`  int default 0,
+	`31`  int default 0,
+	primary key(`mis`)
+);

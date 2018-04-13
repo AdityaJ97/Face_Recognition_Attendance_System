@@ -1,16 +1,17 @@
 import face_recognition
 import cv2
 import time
-#import MySQLdb
+import datetime
+import MySQLdb
 
-#db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-#                     user="root",         # your username
-#                     passwd="AbHiShEk",  # your password
-#                     db="face_detection")        # name of the data base
+db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+                     user="root",         # your username
+                     passwd="AbHiShEk",  # your password
+                     db="FACE")        # name of the data base
 
 # you must create a Cursor object. It will let
 #  you execute all the queries you need
-#cur = db.cursor()
+cur = db.cursor()
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -115,12 +116,16 @@ while True:
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 	tempt = time.time()
+	month = int(datetime.datetime.fromtimestamp(tempt).strftime('%m'))
+	day = int(datetime.datetime.fromtimestamp(tempt).strftime('%d'))
 	if name != "unknown" and misone != "":
 		if ts[misone] == 0 :
 			ts[misone] = tempt
 		elif tempt - ts[misone] > 60 :
 			ts[misone] = tempt
 			print "IN"
+			cur.execute("UPDATE SE_" + month + " SET " + day + " = " + day +" + 1 where mis= '" + misone + "'")
+                	db.commit()
 		
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
@@ -135,10 +140,10 @@ while True:
     cv2.imshow('Video', frame)
 
     # Hit 'q' on the keyboard to quit!
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(33) & 0xFF == ord('q'):
         break
 
-#db.close()
+db.close()
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
