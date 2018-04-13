@@ -4,7 +4,7 @@ import MySQLdb
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
-                     passwd="aditya123",  # your password
+                     passwd="AbHiShEk",  # your password
                      db="face_detection")        # name of the data base
 
 # you must create a Cursor object. It will let
