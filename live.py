@@ -1,15 +1,16 @@
 import face_recognition
 import cv2
-import MySQLdb
+import time
+#import MySQLdb
 
-db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-                     user="root",         # your username
-                     passwd="AbHiShEk",  # your password
-                     db="face_detection")        # name of the data base
+#db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+#                     user="root",         # your username
+#                     passwd="AbHiShEk",  # your password
+#                     db="face_detection")        # name of the data base
 
 # you must create a Cursor object. It will let
 #  you execute all the queries you need
-cur = db.cursor()
+#cur = db.cursor()
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -27,13 +28,13 @@ video_capture = cv2.VideoCapture(0)
 abhishek_image = face_recognition.load_image_file("./known/abhishek.jpg")
 abhishek_face_encoding = face_recognition.face_encodings(abhishek_image)[0]
 
-aditya_image = face_recognition.load_image_file("./known/aditya.JPG")
+aditya_image = face_recognition.load_image_file("./known/aditya.jpg")
 aditya_face_encoding = face_recognition.face_encodings(aditya_image)[0]
 
-daivanti_image = face_recognition.load_image_file("./known/daivanti.jpg")
+daivanti_image = face_recognition.load_image_file("./known/asa.jpg")
 daivanti_face_encoding = face_recognition.face_encodings(daivanti_image)[0]
 
-bala_image = face_recognition.load_image_file("./known/bala.jpg")
+bala_image = face_recognition.load_image_file("./known/ameya.jpg")
 bala_face_encoding = face_recognition.face_encodings(bala_image)[0]
 
 # Create arrays of known face encodings and their names
@@ -62,6 +63,12 @@ face_locations = []
 face_encodings = []
 face_names = []
 mis = []
+ts = {
+	"111503027" : 0,
+	"111503002" : 0,
+	"111503012" : 0,
+	"111508000" : 0
+}
 process_this_frame = True
 
 while True:
@@ -82,6 +89,7 @@ while True:
 
         face_names = []
 	mis = []
+
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding, tolerance = 0.5)
@@ -106,15 +114,22 @@ while True:
         left *= 4
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-	
+	tempt = time.time()
+	if name != "unknown" and misone != "":
+		if ts[misone] == 0 :
+			ts[misone] = tempt
+		elif tempt - ts[misone] > 60 :
+			ts[misone] = tempt
+			print "IN"
+		
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 	#print "UPDATE attendance SET record = 1 where mis=" + misone
-	if name != "unknown":
-		cur.execute("UPDATE attendance SET record = 1 where mis= '" + misone + "'")
-		db.commit()
+#	if name != "unknown":
+		#cur.execute("UPDATE attendance SET record = 1 where mis= '" + misone + "'")
+		#db.commit()
     	
     # Display the resulting image
     cv2.imshow('Video', frame)
@@ -123,7 +138,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-db.close()
+#db.close()
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
