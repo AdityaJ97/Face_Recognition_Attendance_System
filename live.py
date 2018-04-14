@@ -14,8 +14,24 @@ db = MySQLdb.connect(host="localhost",    # your host, usually localhost
 #  you execute all the queries you need
 cur = db.cursor()
 
+tt = {
+"Sunday" : [],
+"Monday" : [],
+"Tuesday" : [],
+"Wednesday" : [],
+"Thursday" : [],
+"Friday" : [],
+"Saturday" : []
+}
 
+for i in range(8) :
+	tt["Sunday"].append("SE")
+	tt["Sunday"].append("OS")
+	tt["Sunday"].append("AI")
 
+tt["Monday"] = tt["Tuesday"] = tt["Wednesday"] = tt["Thursday"] = tt["Friday"] = tt["Saturday"] = tt["Sunday"]
+
+	
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
@@ -134,17 +150,22 @@ while True:
 	if mini > 50:
 		hr += 1
 	if name != "unknown" and misone != "":
+		tempv = tempt - ts[misone]
+		start = hrs[misone]
 		print name, hr, mini, d
 		if ts[misone] == 0 :
 			ts[misone] = tempt
 			hrs[misone] = hr
 		elif tempt - ts[misone] > 10 :
-			ts[misone] = 0
-			#hrs to 0
-			print "IN"
-                	print "UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'"
-			cur.execute("UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'")
-			db.commit()
+			while tempv > 10:
+				ts[misone] = 0
+				#hrs to 0
+				print tt[d][start]
+                		print "UPDATE " + tt[d][start] + "_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'"
+				cur.execute("UPDATE " + tt[d][start] +"_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'")
+				db.commit()
+				tempv -= 10
+				start += 1
 		
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
