@@ -5,13 +5,10 @@ import datetime
 from datetime import date
 import MySQLdb
 
-db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-                     user="root",         # your username
-                     passwd="AbHiShEk",  # your password
-                     db="FACE")        # name of the data base
-
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
+db = MySQLdb.connect(host="localhost",
+                     user="root",     
+                     passwd="AbHiShEk",
+                     db="FACE")
 cur = db.cursor()
 
 tt = {
