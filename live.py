@@ -14,8 +14,25 @@ db = MySQLdb.connect(host="localhost",    # your host, usually localhost
 #  you execute all the queries you need
 cur = db.cursor()
 
+tt = {
+"Sunday" : [],
+"Monday" : [],
+"Tuesday" : [],
+"Wednesday" : [],
+"Thursday" : [],
+"Friday" : [],
+"Saturday" : []
+}
 
+for i in range(8) :
+	tt["Sunday"].append("SE")
+	tt["Sunday"].append("OS")
+	tt["Sunday"].append("AI")
 
+tt["Monday"] = tt["Tuesday"] = tt["Wednesday"] = tt["Thursday"] = tt["Friday"] = tt["Saturday"] = tt["Sunday"]
+
+print tt
+	
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
