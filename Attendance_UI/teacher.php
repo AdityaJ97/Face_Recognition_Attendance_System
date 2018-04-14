@@ -19,10 +19,10 @@ echo '<body>
 		echo "<br><br>";
 		echo 'Select Subject : <select name="subject">
 		<option value="SE">SE</option>
-		<option value="os">OS</option>
-		<option value="ds">DSCI</option>
-		<option value="ai">AI</option>
-		<option value="dbms">DBMS</option>
+		<option value="OS">OS</option>
+		<option value="DSCI">DSCI</option>
+		<option value="AI">AI</option>
+		<option value="DBMS">DBMS</option>
 		</select>'; 
 		echo "<br><br>";
 		echo 'Select Month : <select name="month">
