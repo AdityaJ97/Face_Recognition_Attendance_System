@@ -6,7 +6,7 @@ import MySQLdb
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
-                     passwd="AbHiShEk",  # your password
+                     passwd="aditya123",  # your password
                      db="FACE")        # name of the data base
 
 # you must create a Cursor object. It will let
@@ -121,11 +121,12 @@ while True:
 	if name != "unknown" and misone != "":
 		if ts[misone] == 0 :
 			ts[misone] = tempt
-		elif tempt - ts[misone] > 60 :
+		elif tempt - ts[misone] > 10 :
 			ts[misone] = tempt
 			print "IN"
-			cur.execute("UPDATE SE_" + month + " SET " + day + " = " + day +" + 1 where mis= '" + misone + "'")
-                	db.commit()
+                	print "UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'"
+			cur.execute("UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'")
+			db.commit()
 		
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
