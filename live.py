@@ -28,20 +28,8 @@ for i in range(8) :
 
 tt["Monday"] = tt["Tuesday"] = tt["Wednesday"] = tt["Thursday"] = tt["Friday"] = tt["Saturday"] = tt["Sunday"]
 
-	
-# This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
-# other example, but it includes some basic performance tweaks to make things run a lot faster:
-#   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
-#   2. Only detect faces in every other frame of video.
-
-# PLEASE NOTE: This example requires OpenCV (the `cv2` library) to be installed only to read from your webcam.
-# OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
-# specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
-
-# Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
-# Load a sample picture and learn how to recognize it.
 abhishek_image = face_recognition.load_image_file("./known/abhishek.jpg")
 abhishek_face_encoding = face_recognition.face_encodings(abhishek_image)[0]
 
@@ -54,7 +42,6 @@ daivanti_face_encoding = face_recognition.face_encodings(daivanti_image)[0]
 bala_image = face_recognition.load_image_file("./known/ameya.jpg")
 bala_face_encoding = face_recognition.face_encodings(bala_image)[0]
 
-# Create arrays of known face encodings and their names
 known_face_encodings = [
     abhishek_face_encoding,
     aditya_face_encoding,
@@ -75,7 +62,6 @@ mis_list = [
 	"111508000"
 ]
 
-# Initialize some variables
 face_locations = []
 face_encodings = []
 face_names = []
