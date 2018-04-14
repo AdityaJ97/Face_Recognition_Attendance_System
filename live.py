@@ -2,16 +2,19 @@ import face_recognition
 import cv2
 import time
 import datetime
+from datetime import date
 import MySQLdb
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
-                     passwd="aditya123",  # your password
+                     passwd="AbHiShEk",  # your password
                      db="FACE")        # name of the data base
 
 # you must create a Cursor object. It will let
 #  you execute all the queries you need
 cur = db.cursor()
+
+
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -70,8 +73,15 @@ ts = {
 	"111503012" : 0,
 	"111508000" : 0
 }
-process_this_frame = True
 
+hrs = {
+        "111503027" : 0,
+        "111503002" : 0,
+        "111503012" : 0,
+        "111508000" : 0
+}
+
+process_this_frame = True
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -118,11 +128,19 @@ while True:
 	tempt = time.time()
 	month = int(datetime.datetime.fromtimestamp(tempt).strftime('%m'))
 	day = int(datetime.datetime.fromtimestamp(tempt).strftime('%d'))
+	hr = int(datetime.datetime.fromtimestamp(tempt).strftime('%H')) 
+	mini = int(datetime.datetime.fromtimestamp(tempt).strftime('%M'))
+	d = time.strftime("%A", time.gmtime(tempt))
+	if mini > 50:
+		hr += 1
 	if name != "unknown" and misone != "":
+		print name, hr, mini, d
 		if ts[misone] == 0 :
 			ts[misone] = tempt
+			hrs[misone] = hr
 		elif tempt - ts[misone] > 10 :
-			ts[misone] = tempt
+			ts[misone] = 0
+			#hrs to 0
 			print "IN"
                 	print "UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'"
 			cur.execute("UPDATE SE_" + str(month) + " SET `" + str(day) + "` = `" + str(day) +"` + 1 where mis= '" + misone + "'")
@@ -138,11 +156,11 @@ while True:
 		#db.commit()
     	
     # Display the resulting image
-    cv2.imshow('Video', frame)
-
+#    cv2.imshow('Video', frame)
+    #cv2.waitKey(1)
     # Hit 'q' on the keyboard to quit!
-    if cv2.waitKey(33) & 0xFF == ord('q'):
-        break
+#    if cv2.waitKey(33) & 0xFF == ord('q'):
+#        break
 
 db.close()
 # Release handle to the webcam
